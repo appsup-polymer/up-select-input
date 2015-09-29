@@ -1,0 +1,134 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../paper-input/paper-input-behavior.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../paper-input/paper-input-error.html">
+
+<!--
+`<up-select-input>` is an input element with Material Design styling for selecting a value from multiple options.
+
+    <template is="dom-bind">
+      <up-select-input value="{{_value}}" label="Select an option">
+        <option value="1">option 1</option>
+        <option value="2">option 2</option>
+      </up-select-input>
+
+      <br/>
+      <br/>
+
+      <div>selected value = <span>{{_value}}</span></div>
+    </template>
+
+### Styling
+
+See `Polymer.PaperInputContainer` for a list of custom properties used to
+style this element.
+
+
+@group AppsUp Elements
+@demo demo/index.html
+@class up-select-input
+-->
+
+<dom-module id="up-select-input">
+
+  <style>
+    select {
+      line-height: 24px;
+      background-color: transparent;
+      border: 0;
+      font-size: 16px;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      outline: none;
+    }
+
+    input.dummy {
+      opacity: 0;
+    }
+  </style>
+  <template>
+
+    <paper-input-container id="container"
+                           disabled$="[[disabled]]"
+                           no-label-float="[[noLabelFloat]]"
+                           always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]"
+                           invalid="[[invalid]]">
+      <label hidden$="[[!label]]">[[label]]</label>
+
+      <input is="iron-input" id="input"
+             aria-labelledby$="[[_ariaLabelledBy]]"
+             aria-describedby$="[[_ariaDescribedBy]]"
+             disabled$="[[disabled]]"
+             bind-value="{{value}}"
+             invalid="{{invalid}}"
+             prevent-invalid-input="[[preventInvalidInput]]"
+             allowedPattern="[[allowedPattern]]"
+             validator="[[validator]]"
+             pattern$="[[pattern]]"
+             maxlength$="[[maxlength]]"
+             required$="[[required]]"
+             autocomplete$="[[autocomplete]]"
+             autofocus$="[[autofocus]]"
+             inputmode$="[[inputmode]]"
+             minlength$="[[minlength]]"
+             name$="[[name]]"
+             placeholder$="[[placeholder]]"
+             readonly$="[[readonly]]"
+             size$="[[size]]"
+             class="dummy">
+
+      <select value="{{value::input}}" on-input="_selectInput" id="select">
+      </select>
+      <template is="dom-if" if="[[errorMessage]]">
+        <paper-input-error>[[errorMessage]]</paper-input-error>
+      </template>
+    </paper-input-container>
+
+  </template>
+</dom-module>
+
+<script>
+
+  Polymer({
+    is: "up-select-input",
+
+    behaviors: [
+      Polymer.PaperInputBehavior,
+      Polymer.IronFormElementBehavior,
+      Polymer.IronControlState
+    ],
+
+    properties: {
+      options: {
+        type: Array,
+        value: function() {
+            var nullElement = document.createElement("option");
+            nullElement.style.display = "none";
+            var arr = [nullElement];
+            Polymer.dom(this).children.forEach(function(v) {arr.push(v)});
+            return arr;
+        }
+
+      }
+    },
+
+    _selectInput: function() {
+      console.log("select input");
+      this.$.input.bindValue = this.$.select.value;
+      this.$.container._handleValueAndAutoValidate(this.$.input);
+    },
+
+
+    ready: function() {
+      for (var i in this.options) {
+        var opt = this.options[i];
+        this.$.select.appendChild(opt.cloneNode(true));
+      }
+    }
+
+
+
+  })
+</script>

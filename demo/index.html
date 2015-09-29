@@ -1,0 +1,28 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>paper-select Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../up-select-input.html">
+  </head>
+  <body>
+
+    <p>An example of <code>&lt;up-select-input&gt;</code>:</p>
+
+    <template is="dom-bind">
+      <up-select-input value="{{_value}}" label="Select an option">
+        <option value="1">option 1</option>
+        <option value="2">option 2</option>
+      </up-select-input>
+
+      <br/>
+      <br/>
+
+      <div>selected value = <span>{{_value}}</span></div>
+    </template>
+
+  </body>
+</html>

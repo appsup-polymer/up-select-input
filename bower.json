@@ -1,0 +1,31 @@
+{
+  "name": "up-select-input",
+  "version": "0.5.0",
+  "authors": [
+    "Rik Bellens <rik.bellens@appsup.be>"
+  ],
+  "description": "A polymer input element with Material Design styling for selecting a value from multiple options.",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "select",
+    "paper"
+  ],
+  "main": "paper-select.html",
+  "license": "LICENSE",
+  "homepage": "https://github.com/appsup-polymer/up-select-input/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/"
+  ],
+  "dependencies": {
+    "paper-input": "PolymerElements/paper-input#~1.0.14",
+    "polymer": "Polymer/polymer#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  }
+}
